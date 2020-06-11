@@ -11,6 +11,8 @@ from azureml.core import Workspace
 ws = Workspace.from_config('config_devtalks.json')
 mlflow.set_tracking_uri(ws.get_mlflow_tracking_uri())
 
+data_path = 'http://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv'
+
 # Model evaluation====================================================================================
 def eval_metrics(actual, pred):
     rmse = np.sqrt(mean_squared_error(actual, pred))
@@ -21,7 +23,7 @@ def eval_metrics(actual, pred):
 
 if __name__ == "__main__":
     warnings.filterwarnings("ignore")
-    csv_url ='http://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv'
+    csv_url = data_path
     data = pd.read_csv(csv_url, sep=';')
     train, test = train_test_split(data)
     train_x = train.drop(["quality"], axis=1)
